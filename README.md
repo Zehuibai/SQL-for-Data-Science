@@ -42,13 +42,11 @@ With the DELETE statement you can remove unneeded rows from a table.
 DELETE FROM phonebook WHERE WHERE firstname = 'John' AND lastname = 'Doe';
 ```
 
-
-
 ****
 
 ## Retrieve data
 
-### Select
+### Select Data
 
 * 多条SQL 语句必须以分号（；）分隔。多数DBMS 不需要在单条SQL 语句后加分号，但也有DBMS 可能必须在单条SQL 语句后加上分号
 * SQL 语句不区分大小写，因此SELECT 与select 是相同的
@@ -67,7 +65,41 @@ DELETE FROM phonebook WHERE WHERE firstname = 'John' AND lastname = 'Doe';
   * 注释使用-- （两个连字符）嵌在行内。-- 之后的文本就是注释，
   * 另一种形式的行内注释（但这种形式有些DBMS 不支持) ##
 
+### Sort Data
 
+* 在指定一条ORDER BY 子句时，应该保证它是SELECT 语句中最后一 条子句。如果它不是最后的子句
+* 要按多个列排序，只须指定这些列名，列名之间用逗号分开即可 SELECT prod\_id, prod\_price, prod\_name FROM Products ORDER BY prod\_price, prod\_name;
+* RDER BY 还支持按相对列位置进行排序。SELECT prod\_id, prod\_price, prod\_name FROM Products ORDER BY 2, 3;
+* 数据排序不限于升序排序（从A 到Z），这只是默认的排序顺序。还可以 使用ORDER BY 子句进行降序（从Z 到A）排序。为了进行降序排序， 必须指定DESC 关键字。 SELECT prod\_id, prod\_price, prod\_name FROM Products ORDER BY prod\_price DESC;
 
-### Sort
+### Filter Data
+
+* 检索所需数据需要指 定搜索条件（search criteria），搜索条件也称为过滤条件（filter condition. 在SELECT 语句中，数据根据WHERE 子句中指定的搜索条件进行过滤。 WHERE 子句在表名（FROM 子句）之后给出 SELECT prod\_name, prod\_price FROM Products WHERE prod\_price = 3.49;
+* 在同时使用ORDER BY 和WHERE 子句时，应该让ORDER BY 位于 WHERE 之后，否则将会产生错误
+
+![](.gitbook/assets/image.png)
+
+* NULL 无值（no value），它与字段包含0、空字符串或仅仅包含空格不同。SELECT prod\_name FROM Products WHERE prod\_price IS NULL; 这条语句返回所有没有价格（空prod\_price 字段，不是价格为0）的 产品，由于表中没有这样的行，所以没有返回数据。
+* WHERE 子句可以包含任意数目的AND 和OR 操作符。允许两者结合以进 行复杂、高级的过滤
+* SQL（像 多数语言一样）在处理OR 操作符前，优先处理AND 操作符。当SQL 看到 上述WHERE 子句时，它理解为：由供应商BRS01 制造的价格为10 美元以 上的所有产品，以及由供应商DLL01 制造的所有产品，而不管其价格如何。 换句话说，由于AND 在求值过程中优先级更高，操作符被错误地组合了。此问题的解决方法是使用圆括号对操作符进行明确分组。圆括号具有比AND 或OR 操作符更高的优先级，所以DBMS 首先 过滤圆括号内的OR 条件
+
+```
+SELECT prod_name, prod_price
+FROM Products
+WHERE (vend_id = 'DLL01' OR vend_id = 'BRS01')
+AND prod_price >= 10;
+```
+
+* IN 操作符用来指定条件范围，范围中的每个条件都可以进行匹配。IN 取 一组由逗号分隔、括在圆括号中的合法值。 SELECT prod\_name, prod\_price FROM Products WHERE vend\_id IN ('DLL01','BRS01') ORDER BY prod\_name;
+* NOT 操作符有且只有一个功能，那就是否定其后所跟的 任何条件。因为NOT 从不单独使用（它总是与其他操作符一起使用），所 以它的语法与其他操作符有所不同。**NOT 关键字可以用在要过滤的列前**， 而不仅是在其后。
+
+```
+SELECT prod_name
+FROM Products
+WHERE NOT vend_id = 'DLL01'
+ORDER BY prod_name;
+```
+
+* 通配符（**wildcard**） 用来匹配值的一部分的特殊字符。搜索模式（search pattern） 由字面值、通配符或两者组合构成的搜索条件. 为在搜索子句中使用通配符，必须使用LIKE 操作符。LIKE 指示DBMS，后跟的搜索模式利用通配符匹配而不是简单的相等匹配进 行比较。
+*
 
