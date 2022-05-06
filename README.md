@@ -77,7 +77,7 @@ DELETE FROM phonebook WHERE WHERE firstname = 'John' AND lastname = 'Doe';
 * 检索所需数据需要指 定搜索条件（search criteria），搜索条件也称为过滤条件（filter condition. 在SELECT 语句中，数据根据WHERE 子句中指定的搜索条件进行过滤。 WHERE 子句在表名（FROM 子句）之后给出 SELECT prod\_name, prod\_price FROM Products WHERE prod\_price = 3.49;
 * 在同时使用ORDER BY 和WHERE 子句时，应该让ORDER BY 位于 WHERE 之后，否则将会产生错误
 
-![](<.gitbook/assets/image (1).png>)
+![](<.gitbook/assets/image (1) (1).png>)
 
 * NULL 无值（no value），它与字段包含0、空字符串或仅仅包含空格不同。SELECT prod\_name FROM Products WHERE prod\_price IS NULL; 这条语句返回所有没有价格（空prod\_price 字段，不是价格为0）的 产品，由于表中没有这样的行，所以没有返回数据。
 * WHERE 子句可以包含任意数目的AND 和OR 操作符。允许两者结合以进 行复杂、高级的过滤

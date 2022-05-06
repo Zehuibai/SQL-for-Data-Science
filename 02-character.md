@@ -27,7 +27,7 @@ FROM Vendors
 ORDER BY vend_name;
 ```
 
-![](.gitbook/assets/image.png)
+![](<.gitbook/assets/image (1).png>)
 
 * 为正确返回格式化的数据，必须去掉空格。这可以使用SQL 的RTRIM()函数来完成，
 
@@ -36,4 +36,36 @@ SELECT RTRIM(vend_name) + ' (' + RTRIM(vend_country) + ')'
 FROM Vendors
 ORDER BY vend_name;
 ```
+
+![](.gitbook/assets/image.png)
+
+* 使用别名, 用AS 关键字赋予
+
+```
+SELECT RTRIM(vend_name) + ' (' + RTRIM(vend_country) + ')'
+AS vend_title
+FROM Vendors
+ORDER BY vend_name;
+```
+
+### Arithmetic calculation
+
+SQL 支持表列出的基本算术操作符。此外，圆括号可用来区分优 先顺序。
+
+![](<.gitbook/assets/image (2).png>)
+
+```
+SELECT prod_id,
+quantity,
+item_price,
+quantity*item_price AS expanded_price
+FROM OrderItems
+WHERE order_num = 20008;
+```
+
+
+
+
+
+
 
