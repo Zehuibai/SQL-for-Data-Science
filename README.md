@@ -1,4 +1,4 @@
-# Introduction
+# 01 Introduction SQL
 
 ## SQL
 
@@ -100,6 +100,29 @@ WHERE NOT vend_id = 'DLL01'
 ORDER BY prod_name;
 ```
 
-* 通配符（**wildcard**） 用来匹配值的一部分的特殊字符。搜索模式（search pattern） 由字面值、通配符或两者组合构成的搜索条件. 为在搜索子句中使用通配符，必须使用LIKE 操作符。LIKE 指示DBMS，后跟的搜索模式利用通配符匹配而不是简单的相等匹配进 行比较。
-*
+
+
+### Filter Data using **wildcard**
+
+通配符（**wildcard**） 用来匹配值的一部分的特殊字符。搜索模式（search pattern） 由字面值、通配符或两者组合构成的搜索条件. 为在搜索子句中使用通配符，必须使用LIKE 操作符。LIKE 指示DBMS，后跟的搜索模式利用通配符匹配而不是简单的相等匹配进 行比较。
+
+#### 百分号（%）通配符
+
+* 最常使用的通配符是百分号（%）。在搜索串中，%表示任何字符出现任意次 数。例如，为了找出所有以词Fish 起头的产品，可写以下的SELECT 语句：SELECT prod\_id, prod\_name FROM Products WHERE prod\_name LIKE 'Fish%';
+* 根据DBMS 的不同及其配置，搜索可以是区分大小写的
+* 通配符可在搜索模式中的任意位置使用，并且可以使用多个通配符。SELECT prod\_id, prod\_name FROM Products WHERE prod\_name LIKE '%bean bag%';
+* 提示：根据部分信息搜索电子邮件地址 有一种情况下把通配符放在搜索模式中间是很有用的，就是根据邮件 地址的一部分来查找电子邮件， 例如WHERE email LIKE 'b%@forta.com'。
+* 子句WHERE prod\_name LIKE 'F%y'只匹配以F 开头、以y 结尾的prod\_name。如果值后面跟空格， 则不是以y 结尾，所以Fish bean bag toy 就不会检索出来。简单 的解决办法是给搜索模式再增加一个%号：'F%y%'还匹配y 之后的字 符（或空格）。更好的解决办法是用函数去掉空格。
+
+#### 下划线（\_）通配符
+
+* 另一个有用的通配符是下划线（\_）。下划线的用途与%一样，但它只匹配 单个字符，而不是多个字符。
+* 与%能匹配多个字符不同，\_总是刚好匹配一个字符，不能多也不能少。SELECT prod\_id, prod\_name FROM Products WHERE prod\_name LIKE '\_\_ inch teddy bear';
+* DB2 不支持通配符\_。
+
+#### 方括号（\[ ]）通配符
+
+* 方括号（\[]）通配符用来指定一个字符集，它必须匹配指定位置（通配 符的位置）的一个字符。
+* 例如，找出所有名字以J 或M 起头的联系人，可进行如下查询：SELECT cust\_contact FROM Customers WHERE cust\_contact LIKE '\[JM]%' ORDER BY cust\_contact;
+* 与前面描述的通配符不一样，并不是所有DBMS 都支持用来创建集合 的\[]。微软的SQL Server 支持集合，但是MySQL，Oracle，DB2，SQLite 都不支持
 
